@@ -19,16 +19,6 @@ data class PokemonResponse constructor(
     @SerializedName("types")
     val types: List<Type>,
     @SerializedName("weight")
-    val weight: Int
-){
-    constructor(): this(
-        emptyList(),
-        0,
-        0,
-        "",
-        0,
-        Sprites(),
-        emptyList(),
-        0
-    )
-}
+    val weight: Int,
+    val favorite: Boolean = false
+)

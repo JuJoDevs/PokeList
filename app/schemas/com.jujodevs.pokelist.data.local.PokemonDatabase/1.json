@@ -1,0 +1,124 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "4d27593f5f3972a9b3c5a32fc2c11000",
+    "entities": [
+      {
+        "tableName": "LocalPokemon",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`height` INTEGER NOT NULL, `id` INTEGER NOT NULL, `name` TEXT NOT NULL, `order` INTEGER NOT NULL, `weight` INTEGER NOT NULL, `favorite` INTEGER NOT NULL, `abilities` TEXT NOT NULL, `backDefault` TEXT, `backFemale` TEXT, `backShiny` TEXT, `backShinyFemale` TEXT, `frontDefault` TEXT, `frontFemale` TEXT, `frontShiny` TEXT, `frontShinyFemale` TEXT, `types` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "height",
+            "columnName": "height",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "order",
+            "columnName": "order",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weight",
+            "columnName": "weight",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "favorite",
+            "columnName": "favorite",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "abilities.abilities",
+            "columnName": "abilities",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sprites.backDefault",
+            "columnName": "backDefault",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sprites.backFemale",
+            "columnName": "backFemale",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sprites.backShiny",
+            "columnName": "backShiny",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sprites.backShinyFemale",
+            "columnName": "backShinyFemale",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sprites.frontDefault",
+            "columnName": "frontDefault",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sprites.frontFemale",
+            "columnName": "frontFemale",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sprites.frontShiny",
+            "columnName": "frontShiny",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sprites.frontShinyFemale",
+            "columnName": "frontShinyFemale",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "types.types",
+            "columnName": "types",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4d27593f5f3972a9b3c5a32fc2c11000')"
+    ]
+  }
+}

@@ -1,4 +1,4 @@
-package com.jujodevs.pokelist.pokemon
+package com.jujodevs.pokelist.data.remote.pokemon
 
 
 import com.google.gson.annotations.SerializedName

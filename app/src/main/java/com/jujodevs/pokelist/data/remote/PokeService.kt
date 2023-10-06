@@ -1,6 +1,6 @@
-package com.jujodevs.pokelist
+package com.jujodevs.pokelist.data.remote
 
-import com.jujodevs.pokelist.pokemon.PokemonResponse
+import com.jujodevs.pokelist.data.remote.pokemon.PokemonResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

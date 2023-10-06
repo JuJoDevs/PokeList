@@ -1,8 +1,10 @@
-package com.jujodevs.pokelist
+package com.jujodevs.pokelist.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jujodevs.pokelist.pokemon.PokemonResponse
+import com.jujodevs.pokelist.data.local.PokemonDao
+import com.jujodevs.pokelist.data.remote.PokeService
+import com.jujodevs.pokelist.data.remote.pokemon.PokemonResponse
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -13,7 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Locale
 
-class MainViewModel : ViewModel() {
+class HomeViewModel(val dao: PokemonDao) : ViewModel() {
     private val service: PokeService =
         Retrofit.Builder()
             .baseUrl("https://pokeapi.co/api/v2/")
@@ -26,6 +28,11 @@ class MainViewModel : ViewModel() {
     val state: StateFlow<UiState> = _state
     init {
         viewModelScope.launch {
+            val isDbEmpty = dao.count() == 0
+            if (isDbEmpty) {
+
+            }
+
             _state.value = _state.value.copy(loading = true)
             val pokemons = service.getPokemonList().results
 

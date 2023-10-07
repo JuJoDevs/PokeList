@@ -1,9 +1,10 @@
-package com.jujodevs.pokelist.data.remote.pokemon
+package com.jujodevs.pokelist.data.remote.model.pokemon
 
 
 import com.google.gson.annotations.SerializedName
+import com.jujodevs.pokelist.domain.model.Sprites
 
-data class Sprites constructor(
+data class SpritesResponse constructor(
     @SerializedName("back_default")
     val backDefault: String?,
     @SerializedName("back_female")
@@ -21,7 +22,5 @@ data class Sprites constructor(
     @SerializedName("front_shiny_female")
     val frontShinyFemale: String?
 ){
-    constructor(): this(
-        "", "", "", "", "", "", "", ""
-    )
+    fun toSprites() = Sprites(backDefault, backFemale, backShiny, backShinyFemale, frontDefault, frontFemale, frontShiny, frontShinyFemale)
 }

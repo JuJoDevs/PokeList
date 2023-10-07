@@ -1,11 +1,12 @@
-package com.jujodevs.pokelist.data.remote.pokemon
+package com.jujodevs.pokelist.data.remote.model.pokemon
 
 
 import com.google.gson.annotations.SerializedName
+import com.jujodevs.pokelist.domain.model.Pokemon
 
 data class PokemonResponse constructor(
     @SerializedName("abilities")
-    val abilities: List<Ability>,
+    val abilities: List<AbilityResponse>,
     @SerializedName("height")
     val height: Int,
     @SerializedName("id")
@@ -15,10 +16,22 @@ data class PokemonResponse constructor(
     @SerializedName("order")
     val order: Int,
     @SerializedName("sprites")
-    val sprites: Sprites,
+    val sprites: SpritesResponse,
     @SerializedName("types")
-    val types: List<Type>,
+    val types: List<TypeResponse>,
     @SerializedName("weight")
     val weight: Int,
     val favorite: Boolean = false
-)
+) {
+    fun toPokemon() = Pokemon(
+        abilities.map { it.toAbility() },
+        height,
+        id,
+        name,
+        order,
+        sprites.toSprites(),
+        types.map { it.toType() },
+        weight,
+        favorite
+    )
+}

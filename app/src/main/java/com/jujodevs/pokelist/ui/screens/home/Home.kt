@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,38 +36,42 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.imageLoader
 import coil.request.ImageRequest
-import com.jujodevs.pokelist.data.local.PokemonDao
-import com.jujodevs.pokelist.data.remote.pokemon.PokemonResponse
+import com.jujodevs.pokelist.data.PokemonRepository
+import com.jujodevs.pokelist.domain.model.Pokemon
 import com.jujodevs.pokelist.ui.theme.PokeListTheme
 import java.util.Locale
 
 @Composable
-fun Home(pokemonDao: PokemonDao) {
+fun Home(repository: PokemonRepository) {
     PokeListTheme {
 
-        val viewModel: HomeViewModel = viewModel { HomeViewModel(pokemonDao) }
+        val viewModel: HomeViewModel = viewModel { HomeViewModel(repository) }
         val state by viewModel.state.collectAsState()
-
-        val context = LocalContext.current
-        LaunchedEffect(state.loading) {
-            state.pokemons.forEach { pokemon ->
-                val request = ImageRequest.Builder(context)
-                    .data(pokemon.sprites.frontDefault)
-                    .build()
-                context.imageLoader.enqueue(request)
-            }
-        }
 
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
+            val context = LocalContext.current
+            LaunchedEffect(key1 = state.loading) {
+                if (!state.loading){
+                    state.pokemons.forEach { pokemon ->
+                        ImageRequest.Builder(context)
+                            .data(pokemon.sprites.frontDefault)
+                            .build().also {
+                                context.imageLoader.enqueue(it)
+                            }
+                    }
+                }
+            }
 
             Box(modifier = Modifier.fillMaxSize()) {
                 BodyPokeList(viewModel, state.pokemons)
                 if (state.loading) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.TopEnd).padding(16.dp))
+                    CircularProgressIndicator(modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(16.dp))
                 }
             }
         }
@@ -74,7 +79,7 @@ fun Home(pokemonDao: PokemonDao) {
 }
 
 @Composable
-fun BodyPokeList(viewModel: HomeViewModel, pokemons: List<PokemonResponse>) {
+fun BodyPokeList(viewModel: HomeViewModel, pokemons: List<Pokemon>) {
 
     LazyVerticalGrid(columns = GridCells.Adaptive(120.dp)) {
         items(pokemons) { pokemon ->
@@ -84,7 +89,7 @@ fun BodyPokeList(viewModel: HomeViewModel, pokemons: List<PokemonResponse>) {
 }
 
 @Composable
-fun PokeItem(pokemon: PokemonResponse, onClick: () -> Unit) {
+fun PokeItem(pokemon: Pokemon, onClick: () -> Unit) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
         modifier = Modifier
@@ -105,7 +110,7 @@ fun PokeItem(pokemon: PokemonResponse, onClick: () -> Unit) {
                         ) else it.toString()
                     },
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 114.dp)
                 )
                 if (pokemon.favorite) {
                     Icon(
